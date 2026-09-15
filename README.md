@@ -82,34 +82,44 @@ Skill 会立即退出角色扮演，生成本次报告并保存到复习台。�
 
 ### 运行要求
 
-- Windows 10 或 Windows 11；
+- Windows、macOS 或 Linux；
 - 支持加载本地 Skill 并执行本地脚本的 Codex；
 - Python 3.10 或更高版本；
 - 浏览器，用于查看本地复习台。
 
 核心功能只使用 Python 标准库，不需要安装 pip 依赖、Node.js 或 API Key。语音练习还需要当前客户端支持语音输入；文字练习不受影响。
 
-### 1. 配置 CodexHome
+### 1. 确认 Codex 技能目录
 
-推荐将 Codex 技能和配置放在 G 盘。PowerShell 中执行：
+jpkouyu 不要求使用 G 盘，也不要求修改 `CODEX_HOME`。按照 OpenAI 当前的 Codex Skill 目录规则，个人技能推荐放在：
+
+| 系统 | 个人技能目录 |
+|---|---|
+| Windows | `%USERPROFILE%\.agents\skills` |
+| macOS / Linux | `$HOME/.agents/skills` |
+
+Windows PowerShell 创建目录：
 
 ~~~powershell
-[Environment]::SetEnvironmentVariable(
-  'CODEX_HOME',
-  'G:\AI\OpenAI\CodexHome',
-  'User'
-)
-$env:CODEX_HOME = 'G:\AI\OpenAI\CodexHome'
+$skillRoot = Join-Path $HOME '.agents\skills'
+New-Item -ItemType Directory -Force -Path $skillRoot | Out-Null
 ~~~
 
-如果 CodexHome 已经配置好，可以跳过这一步。使用其他磁盘时，把路径替换成实际目录。
+macOS / Linux 创建目录：
+
+~~~bash
+mkdir -p "$HOME/.agents/skills"
+~~~
+
+如果你已经通过 `$skill-installer` 安装技能，或为 Codex 配置了其他技能目录，请继续使用现有目录，无需迁移。
 
 ### 2. 安装技能
 
-将完整的 jpkouyu 文件夹放到：
+将完整的 `jpkouyu` 文件夹放入个人技能目录。安装后的关键文件应位于：
 
 ~~~text
-G:\AI\OpenAI\CodexHome\skills\jpkouyu
+Windows：%USERPROFILE%\.agents\skills\jpkouyu\SKILL.md
+macOS / Linux：$HOME/.agents/skills/jpkouyu/SKILL.md
 ~~~
 
 安装后的目录结构应类似：
@@ -125,19 +135,21 @@ jpkouyu/
 └── README.md
 ~~~
 
-如果拿到的是 jpkouyu.zip，可以在 PowerShell 中执行：
+如果拿到的是 `jpkouyu.zip`，Windows PowerShell 可以执行：
 
 ~~~powershell
-Expand-Archive -LiteralPath 'G:\AI\OpenAI\Workspaces\jpkouyu.zip' -DestinationPath 'G:\AI\OpenAI\CodexHome\skills'
+$skillRoot = Join-Path $HOME '.agents\skills'
+New-Item -ItemType Directory -Force -Path $skillRoot | Out-Null
+Expand-Archive -LiteralPath '.\jpkouyu.zip' -DestinationPath $skillRoot
 ~~~
 
-不要让目录变成 skills\jpkouyu\jpkouyu\SKILL.md。正确位置应是 skills\jpkouyu\SKILL.md。
+不要让目录变成 `skills/jpkouyu/jpkouyu/SKILL.md`。正确位置应是 `skills/jpkouyu/SKILL.md`。
 
 ### 3. 检查 Python 和技能位置
 
 ~~~powershell
 python --version
-Test-Path 'G:\AI\OpenAI\CodexHome\skills\jpkouyu\SKILL.md'
+Test-Path (Join-Path $HOME '.agents\skills\jpkouyu\SKILL.md')
 ~~~
 
 Python 应显示 3.10 或更高版本，第二条命令应返回 True。如果系统使用 py 启动器，也可以将后续命令中的 python 替换为 py -3。
@@ -161,10 +173,19 @@ Python 应显示 3.10 或更高版本，第二条命令应返回 True。如果�
 
 ### 启动复习台
 
-PowerShell 中执行：
+Windows PowerShell 中执行：
 
 ~~~powershell
-python 'G:\AI\OpenAI\CodexHome\skills\jpkouyu\scripts\workbench.py' serve
+$skillDir = Join-Path $HOME '.agents\skills\jpkouyu'
+$dataDir = Join-Path $HOME 'jpkouyu-data'
+python (Join-Path $skillDir 'scripts\workbench.py') serve --data-dir $dataDir
+~~~
+
+macOS / Linux 终端中执行：
+
+~~~bash
+python3 "$HOME/.agents/skills/jpkouyu/scripts/workbench.py" serve \
+  --data-dir "$HOME/jpkouyu-data"
 ~~~
 
 浏览器通常会自动打开：
@@ -177,10 +198,11 @@ http://127.0.0.1:8766/
 
 ### 数据保存位置
 
-默认数据目录：
+上面的通用命令会把数据保存在当前用户主目录：
 
 ~~~text
-G:\AI\OpenAI\Workspaces\jpkouyu-data
+Windows：%USERPROFILE%\jpkouyu-data
+macOS / Linux：$HOME/jpkouyu-data
 ~~~
 
 其中包含：
@@ -194,18 +216,19 @@ jpkouyu-data/
 
 记录只保存在本机。备份时复制整个 jpkouyu-data 文件夹即可。
 
-### 使用其他数据目录
+### 使用自定义数据目录
 
 init、archive 和 serve 必须使用同一个数据目录。例如：
 
 ~~~powershell
 $jpData = 'D:\Japanese\jpkouyu-data'
+$skillDir = Join-Path $HOME '.agents\skills\jpkouyu'
 
-python 'G:\AI\OpenAI\CodexHome\skills\jpkouyu\scripts\workbench.py' init --data-dir $jpData
-python 'G:\AI\OpenAI\CodexHome\skills\jpkouyu\scripts\workbench.py' serve --data-dir $jpData
+python (Join-Path $skillDir 'scripts\workbench.py') init --data-dir $jpData
+python (Join-Path $skillDir 'scripts\workbench.py') serve --data-dir $jpData
 ~~~
 
-非 Windows 环境或没有 G 盘时，必须通过 --data-dir 指定一个可写的绝对路径。
+`init`、`archive` 和 `serve` 必须使用同一个数据目录。数据目录应使用可写的绝对路径。
 
 ### 每日小说一句
 
@@ -228,7 +251,7 @@ python 'G:\AI\OpenAI\CodexHome\skills\jpkouyu\scripts\workbench.py' serve --data
 确认文件存在：
 
 ~~~powershell
-Test-Path 'G:\AI\OpenAI\CodexHome\skills\jpkouyu\SKILL.md'
+Test-Path (Join-Path $HOME '.agents\skills\jpkouyu\SKILL.md')
 ~~~
 
 然后重新打开 Codex 或新建会话。
@@ -242,7 +265,9 @@ Test-Path 'G:\AI\OpenAI\CodexHome\skills\jpkouyu\SKILL.md'
 改用其他端口：
 
 ~~~powershell
-python 'G:\AI\OpenAI\CodexHome\skills\jpkouyu\scripts\workbench.py' serve --port 8767
+$skillDir = Join-Path $HOME '.agents\skills\jpkouyu'
+$dataDir = Join-Path $HOME 'jpkouyu-data'
+python (Join-Path $skillDir 'scripts\workbench.py') serve --data-dir $dataDir --port 8767
 ~~~
 
 然后打开终端显示的新地址。
