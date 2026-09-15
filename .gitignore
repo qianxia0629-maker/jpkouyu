@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+workbench-data.json
+sessions/
+inbox/
+jpkouyu-data/

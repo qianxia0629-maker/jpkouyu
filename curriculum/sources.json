@@ -1,0 +1,24 @@
+[
+  {
+    "id": "ja-irodori",
+    "title": "いろどり 生活の日本語",
+    "language": "ja",
+    "scope": "japanese_jpkouyu",
+    "publisher": "国際交流基金",
+    "url": "https://www.irodori.jpf.go.jp/",
+    "usage": "reference_only",
+    "license": "参照网站使用条款；本技能不授予教材转载许可",
+    "verification_status": "official_landing_page_checked_2026-09-15"
+  },
+  {
+    "id": "ja-erin",
+    "title": "エリンが挑戦！にほんごできます。",
+    "language": "ja",
+    "scope": "japanese_jpkouyu",
+    "publisher": "国際交流基金",
+    "url": "https://www.erin.jpf.go.jp/",
+    "usage": "reference_only",
+    "license": "参照网站使用条款；本技能不授予教材转载许可",
+    "verification_status": "official_landing_page_checked_2026-09-15"
+  }
+]

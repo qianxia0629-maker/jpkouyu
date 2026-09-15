@@ -1,0 +1,6 @@
+interface:
+  display_name: "日语口语练习台"
+  short_description: "日语场景陪练、假名读音与中文提示，轻量纠错并自动保存本地复习记录"
+  default_prompt: "使用 $jpkouyu 帮我做一次 10 分钟的日语口语训练，主题是便利店结账，程度为入门，使用中文引导并标注假名。"
+policy:
+  allow_implicit_invocation: true

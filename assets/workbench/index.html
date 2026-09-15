@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f5f3ec"><title>jpkouyu · 日语口语复习台</title>
+<link rel="stylesheet" href="styles.css?v=20260915b">
+</head>
+<body>
+<a class="skip-link" href="#review">跳到复习记录</a>
+<div class="shell">
+<aside class="sidebar">
+<a class="brand" href="#top" aria-label="日语口语复习台首页"><span class="brand-mark" lang="ja">話</span><span><b>日语口语复习台</b><small>jpkouyu</small></span></a>
+<nav class="nav" aria-label="主导航">
+<a class="nav-item active" href="#review"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6c2 0 2 2 2 2s0-2 2-2h6v15h-6c-2 0-2 2-2 2s0-2-2-2H4zM12 6v15"/></svg>我的复习台</a>
+<a class="nav-item" href="#daily-quote"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v4m10-4v4M4 9h16M4 5h16v16H4zM8 13h3m2 0h3m-8 4h3"/></svg>今日一句</a>
+</nav>
+<div class="practice-note"><span lang="ja">少しずつ、<br>自分の言葉に。</span><p>一点一点，变成自己的表达。</p><b id="session-count">从第 1 次开始</b></div>
+<p class="local-note">练习记录保存在本机</p>
+</aside>
+<main id="top">
+<header class="topbar"><span>我的日语学习手帖</span><div class="status-pill" role="status"><i aria-hidden="true"></i><span id="save-status">正在读取本地存档…</span></div></header>
+<div class="view">
+<header class="page-heading"><h1>把说过的，再练好一点。</h1><p>复习日语表达，记住改法，再带到下一次对话里。</p><p>想结束练习并查看报告时，说 <strong>「结束练习」</strong> 或 <strong lang="ja">「練習を終わりにします」</strong>。报告会自动保存到下方复习记录。</p></header>
+<div class="overview-layout">
+<section id="daily-quote" class="quote-panel" aria-labelledby="quote-heading">
+<div class="quote-topline"><h2 id="quote-heading">今日一句 <span lang="ja">本の中から</span></h2><time id="quote-date"></time></div>
+<figure><blockquote id="quote-text" lang="ja"></blockquote><p id="quote-translation" class="quote-translation"></p>
+<figcaption><span id="quote-author" lang="ja"></span><cite id="quote-work" lang="ja"></cite><a id="quote-source" target="_blank" rel="noopener noreferrer">阅读原文 ↗</a></figcaption></figure>
+<details class="quote-study"><summary>读音与小练习</summary><p id="quote-reading" lang="ja"></p><p id="quote-context"></p><p id="quote-prompt"></p></details>
+<div class="quote-footer"><span id="quote-clock-note">按电脑本地日期每日更新</span><span>中文为学习用译意</span></div>
+</section>
+<section class="overview" aria-labelledby="overview-heading">
+<h2 id="overview-heading">练习概览</h2>
+<dl class="review-stats">
+<div><dt>累计练习</dt><dd><b id="stat-sessions">0</b><span>次</span></dd></div>
+<div><dt>已掌握表达</dt><dd><b id="stat-mastered">0</b><span>个</span></dd></div>
+<div><dt>待复习表达</dt><dd><b id="stat-review">0</b><span>个</span></dd></div>
+</dl><p>练完说「结束练习」，<br>本次表现就会整理到这里。</p>
+</section>
+</div>
+<section id="review" aria-labelledby="review-heading">
+<div class="section-heading"><div><h2 id="review-heading">我的复习记录</h2><p>按场景整理表达、纠正与下次重点。</p></div><button id="refresh-data" class="text-button" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8a8 8 0 1 0 0 8M20 3v5h-5"/></svg>刷新记录</button></div>
+<div id="empty-review" class="empty-state">
+<div><h3>第一段对话，从今天开始。</h3><p>回到 Codex，用下面这句话开始。练习结束后，日语原句、假名读音和改法会出现在这里。</p></div>
+<div class="start-example"><code>使用 $jpkouyu，陪我练 10 分钟便利店日语，入门程度，中文引导。</code><button type="button" id="copy-start">复制练习指令</button><span id="copy-status" role="status"></span></div>
+</div><div id="review-list" class="review-list"></div>
+</section>
+<footer class="page-footer"><span>jpkouyu · 每次多说一点</span><span>真实练习，慢慢积累。</span></footer>
+</div></main></div>
+<noscript>请启用 JavaScript，以显示每日短句和本地复习记录。</noscript>
+<script src="daily-quotes.js?v=20260915b"></script><script src="app.js?v=20260915b"></script>
+</body></html>
